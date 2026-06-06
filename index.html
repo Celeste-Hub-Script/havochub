@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tabbed App</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  /* LOGIN SCREEN */
+  #loginPage {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+    color: white;
+  }
+
+  .login-box {
+    background: #222;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+  }
+
+  .login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .login-box button {
+    width: 100%;
+    padding: 10px;
+    background: #4CAF50;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .error {
+    color: red;
+    font-size: 13px;
+  }
+
+  /* APP LAYOUT */
+  #app {
+    display: none;
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 200px;
+    background: #1f1f1f;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+  }
+
+  .tab {
+    padding: 15px;
+    cursor: pointer;
+  }
+
+  .tab:hover {
+    background: #333;
+  }
+
+  .content {
+    margin-left: 200px;
+    padding: 20px;
+  }
+
+  .panel {
+    display: none;
+  }
+
+  .panel.active {
+    display: block;
+  }
+
+  .logout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: red;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage">
+  <div class="login-box">
+    <h2>Sign In</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p class="error" id="error"></p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <div class="sidebar">
+    <div class="tab" onclick="showTab('home')">Home</div>
+    <div class="tab" onclick="showTab('profile')">Profile</div>
+    <div class="tab" onclick="showTab('settings')">Settings</div>
+
+    <div class="logout" onclick="logout()">Logout</div>
+  </div>
+
+  <div class="content">
+    <div id="home" class="panel active">
+      <h1>Home</h1>
+      <p>Welcome to your dashboard.</p>
+    </div>
+
+    <div id="profile" class="panel">
+      <h1>Profile</h1>
+      <p>Your profile info goes here.</p>
+    </div>
+
+    <div id="settings" class="panel">
+      <h1>Settings</h1>
+      <p>Adjust your settings here.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 🔐 ALLOWED USERS (EDIT THIS)
+  const users = [
+    { email: "test@example.com", password: "1234" },
+    { email: "admin@site.com", password: "adminpass" }
+  ];
+
+  function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const error = document.getElementById("error");
+
+    const match = users.find(u => u.email === email && u.password === password);
+
+    if (match) {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      error.textContent = "";
+    } else {
+      error.textContent = "Invalid email or password";
+    }
+  }
+
+  function logout() {
+    document.getElementById("loginPage").style.display = "flex";
+    document.getElementById("app").style.display = "none";
+  }
+
+  function showTab(tabId) {
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+    document.getElementById(tabId).classList.add("active");
+  }
+</script>
+
+</body>
+</html>
