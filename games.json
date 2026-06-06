@@ -1,0 +1,11 @@
+{
+    "5750914919": {
+        "type": "link",
+        "content": "https://example.com/fisch.lua"
+    },
+
+    "994732206": {
+        "type": "paste",
+        "content": "print('Blox Fruits Loaded!')"
+    }
+}
